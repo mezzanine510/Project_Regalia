@@ -12,13 +12,14 @@ public class FollowCamera : MonoBehaviour
         // camera = Camera.main;
     }
 
-    void Update()
+    void LateUpdate()
     {
+        transform.position = target.transform.position;
+        
         // Camera.main.transform.position = new Vector3(
         //     target.transform.position.x,
         //     camera.transform.position.y,
         //     target.transform.position.z
         // );
-        transform.position = target.transform.position;
     }
 }
