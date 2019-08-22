@@ -26,10 +26,12 @@ namespace RPG.Control
         private bool InteractWithCombat()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
-            
+
+            if (!Input.GetMouseButton(0)) return false;
+
             foreach (RaycastHit hit in hits)
             {
-                if (Input.GetMouseButton(0) && hit.collider.gameObject.GetComponent<CombatTarget>())
+                if (hit.collider.gameObject.GetComponent<CombatTarget>())
                 {
                     GameObject target = hit.collider.gameObject;
                     fighter.Attack(target);
@@ -49,7 +51,6 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButton(0))
                 {
-                    fighter.CancelAttack();
                     mover.MoveTo(hit.point);
                 }
                 return true;
@@ -65,3 +66,23 @@ namespace RPG.Control
     }
 
 }
+
+
+// NOTE: ALTERNATE METHOD - check for possible bugs with old and new method
+
+// private bool InteractWithCombat()
+//         {
+//             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            
+//             foreach (RaycastHit hit in hits)
+//             {
+//                 if (Input.GetMouseButton(0) && hit.collider.gameObject.GetComponent<CombatTarget>())
+//                 {
+//                     GameObject target = hit.collider.gameObject;
+//                     fighter.Attack(target);
+//                     return true;
+//                 }
+//             }
+
+//             return false;
+//         }
