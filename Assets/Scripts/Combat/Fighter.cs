@@ -1,42 +1,6 @@
-// using UnityEngine;
-// using RPG.Movement;
-
-// namespace RPG.Combat
-// {
-//     public class Fighter : MonoBehaviour
-//     {
-//         [SerializeField] float weaponRange = 2f;
-//         Transform target;
-
-//         private void Update() {
-//             if (target !=null)   
-//             {
-//                 GetComponent<Mover>().MoveTo(target.position);
-//             }
-//         }
-
-//         // public void Attack(GameObject target)
-//         public void Attack(GameObject combatTarget)
-//         {
-//             target = combatTarget.transform;
-//             Vector3 position = transform.position;
-//             Vector3 targetPosition = target.transform.position;
-//             float distance = (position - targetPosition).magnitude;
-
-//             if (distance <= weaponRange)
-//             {
-//                 print("Take that you peasant! You.. you PEON!!!");
-//                 print("You hit: " + target.name);
-//             }
-//         }
-//     }
-// }
-
-
-
-// My version
-
 using UnityEngine;
+using UnityEngine.AI;
+using RPG.Movement;
 
 namespace RPG.Combat
 {
@@ -44,18 +8,55 @@ namespace RPG.Combat
     {
         [SerializeField] float weaponRange = 2f;
 
-        // public void Attack(GameObject target)
-        public void Attack(GameObject target)
-        {
-            Vector3 position = transform.position;
-            Vector3 targetPosition = target.transform.position;
-            float distance = (position - targetPosition).magnitude;
+        Mover mover;
+        NavMeshAgent navMeshAgent;
+        GameObject target;
 
-            if (distance <= weaponRange)
+        private void Start() {
+            mover = GetComponent<Mover>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+
+        private void Update() {
+            if (!target) return;
+            bool inAttackRange = InAttackRange(target);
+
+            if (!inAttackRange)
             {
-                print("Take that you peasant! You.. you PEON!!!");
-                print("You hit: " + target.name);
+                mover.MoveTo(target.transform.position);
             }
+            else if (inAttackRange)
+            {
+                mover.Stop();
+            }
+            else
+            {
+                navMeshAgent.isStopped = false;
+            }
+        }
+
+        public void Attack(GameObject combatTarget)
+        {
+            target = combatTarget;
+        }
+
+        public void CancelAttack()
+        {
+            target = null;
+        }
+        
+        // compare distance^2 with weaponRange^2
+        private bool InAttackRange(GameObject target)
+        {
+            float sqrDistance = GetSqrDistance(transform.position, target.transform.position);
+            if (sqrDistance <= weaponRange * weaponRange) return true;
+            return false;
+        }
+
+        // using .sqrMagnitude to measure distance is faster than .magnitude - it avoids square root operation
+        private float GetSqrDistance(Vector3 origin, Vector3 target)
+        {
+            return (origin - target).sqrMagnitude;
         }
     }
 }

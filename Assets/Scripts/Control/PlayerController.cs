@@ -29,13 +29,12 @@ namespace RPG.Control
             
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.gameObject.GetComponent<CombatTarget>() != null)
+                if (Input.GetMouseButton(0) && hit.collider.gameObject.GetComponent<CombatTarget>())
                 {
                     GameObject target = hit.collider.gameObject;
                     fighter.Attack(target);
                     return true;
                 }
-
             }
 
             return false;
@@ -50,6 +49,7 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButton(0))
                 {
+                    fighter.CancelAttack();
                     mover.MoveTo(hit.point);
                 }
                 return true;

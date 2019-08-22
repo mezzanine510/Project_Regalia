@@ -19,16 +19,15 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
-        public void Stop()
-        {
-            navMeshAgent.isStopped = true;
-            // navMeshAgent.velocity = new Vector3(0, 0, 0);
-        }
-
         public void MoveTo(Vector3 destination)
         {
             navMeshAgent.destination = destination;
             navMeshAgent.isStopped = false;
+        }
+
+        public void Stop()
+        {
+            navMeshAgent.isStopped = true;
         }
 
         private void UpdateAnimator()
