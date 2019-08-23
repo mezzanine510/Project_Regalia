@@ -10,6 +10,7 @@ namespace RPG.Combat
     {
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
+        [SerializeField] float weaponDamage = 5f;
         float timeSinceLastAttack;
 
         Animator animator;
@@ -47,14 +48,23 @@ namespace RPG.Combat
         {
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
-                timeSinceLastAttack = 0;
                 actionScheduler.StartAction(this);
-                animator.SetTrigger("attack");
+                timeSinceLastAttack = 0;
+                animator.SetTrigger("attack"); // triggers Hit()
             }
+        }
 
-            // NOTE: alternate methods
-            // mover.Cancel();
-            // animator.Play("Attack");
+        // Animation Event: occurs when attack makes contact
+        private void Hit()
+        {
+            DealDamage(weaponDamage, target);
+        }
+
+        private void DealDamage(float damage, GameObject combatTarget)
+        {
+            Vector3 direction = transform.position;
+            combatTarget.GetComponent<Health>().TakeDamage(damage, direction);
+            print("Health: " + combatTarget.GetComponent<Health>().health);
         }
 
         public void SetAttackTarget(GameObject combatTarget)
@@ -84,19 +94,6 @@ namespace RPG.Combat
         private float WeaponRangeSquared()
         {
             return weaponRange * weaponRange;
-        }
-
-        // Animation Event: occurs when attack makes contact
-        private void Hit()
-        {
-            DealDamage(5f, target);
-        }
-
-        private void DealDamage(float damage, GameObject combatTarget)
-        {
-            Vector3 direction = transform.position;
-            combatTarget.GetComponent<Health>().TakeDamage(damage, direction);
-            print("Health: " + combatTarget.GetComponent<Health>().health);
         }
     }
 }
