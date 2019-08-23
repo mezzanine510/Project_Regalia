@@ -27,14 +27,14 @@ namespace RPG.Control
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
 
-            if (!Input.GetMouseButton(0)) return false;
+            if (!Input.GetMouseButton(0)) return false; // TODO: this return could cause a potential future bug
 
             foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<CombatTarget>())
                 {
                     GameObject target = hit.collider.gameObject;
-                    fighter.Attack(target);
+                    fighter.SetAttackTarget(target);
                     return true;
                 }
             }
@@ -66,6 +66,7 @@ namespace RPG.Control
     }
 
 }
+
 
 
 // NOTE: ALTERNATE METHOD - check for possible bugs with old and new method

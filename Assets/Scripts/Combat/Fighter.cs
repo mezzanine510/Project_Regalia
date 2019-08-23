@@ -2,46 +2,63 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
 using RPG.Movement;
+using System;
 
 namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] float weaponRange = 2f;
+        [SerializeField] float timeBetweenAttacks = 1f;
+        float timeSinceLastAttack;
 
+        Animator animator;
         Mover mover;
         ActionScheduler actionScheduler;
         NavMeshAgent navMeshAgent;
         GameObject target;
-        GameObject targetHolder;
 
         private void Awake() {
+            animator = GetComponent<Animator>();
             mover = GetComponent<Mover>();
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
+            timeSinceLastAttack = timeBetweenAttacks + 1; // avoid bug on scene load: character doesn't attack right away 
         }
 
         private void Update() {
             if (!target) return;
 
-            targetHolder = target;
+            timeSinceLastAttack += Time.deltaTime;
             bool inAttackRange = TargetInAttackRange(target);
 
             if (!inAttackRange)
             {
                 mover.MoveTo(target.transform.position);
-                target = targetHolder;
             }
             else
             {
-                // mover.StopMoving();
-                actionScheduler.StartAction(this);
+                AttackBehaviour();
+                mover.StopMoving();
             }
         }
 
-        public void Attack(GameObject combatTarget)
+        private void AttackBehaviour()
         {
-            // actionScheduler.StartAction(this);
+            if (timeSinceLastAttack > timeBetweenAttacks)
+            {
+                timeSinceLastAttack = 0;
+                actionScheduler.StartAction(this);
+                animator.SetTrigger("attack");
+            }
+
+            // NOTE: alternate methods
+            // mover.Cancel();
+            // animator.Play("Attack");
+        }
+
+        public void SetAttackTarget(GameObject combatTarget)
+        {
             target = combatTarget;
         }
 
@@ -50,19 +67,36 @@ namespace RPG.Combat
             target = null;
             print("Cancelling action: " + this);
         }
-        
-        // compare distance^2 with weaponRange^2
+
+        // Use .sqrMagnitude to measure distance - it avoids .magnitude square root operation. Then, compare distance^2 with weaponRange^2
         private bool TargetInAttackRange(GameObject target)
         {
-            float sqrDistance = GetSqrDistance(transform.position, target.transform.position);
-            if (sqrDistance < weaponRange * weaponRange) return true;
+            if (DistanceSquared(target) < WeaponRangeSquared()) return true;
             return false;
         }
 
-        // using .sqrMagnitude to measure distance is faster than .magnitude - it avoids square root operation
-        private float GetSqrDistance(Vector3 origin, Vector3 target)
+        private float DistanceSquared(GameObject target)
         {
-            return (origin - target).sqrMagnitude;
+            
+            return (transform.position - target.transform.position).sqrMagnitude;
+        }
+
+        private float WeaponRangeSquared()
+        {
+            return weaponRange * weaponRange;
+        }
+
+        // Animation Event: occurs when attack makes contact
+        private void Hit()
+        {
+            DealDamage(5f, target);
+        }
+
+        private void DealDamage(float damage, GameObject combatTarget)
+        {
+            Vector3 direction = transform.position;
+            combatTarget.GetComponent<Health>().TakeDamage(damage, direction);
+            print("Health: " + combatTarget.GetComponent<Health>().health);
         }
     }
 }
