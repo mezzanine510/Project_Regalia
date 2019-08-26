@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
 using RPG.Movement;
-using System;
 
 namespace RPG.Combat
 {
@@ -19,21 +18,24 @@ namespace RPG.Combat
         NavMeshAgent navMeshAgent;
         GameObject target;
 
-        private void Awake() {
+        private void Awake()
+        {
             animator = GetComponent<Animator>();
             mover = GetComponent<Mover>();
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-            timeSinceLastAttack = timeBetweenAttacks + 1; // avoid bug on scene load: character doesn't attack right away 
+            timeSinceLastAttack = timeBetweenAttacks + 1; // avoids bug on scene load where character doesn't attack right away 
         }
 
-        private void Update() {
+        private void Update()
+        {
             if (!target) return;
+            if (target.GetComponent<Health>().IsDead()) return;
 
             timeSinceLastAttack += Time.deltaTime;
-            bool inAttackRange = TargetInAttackRange(target);
+            bool targetInAttackRange = TargetInAttackRange(target);
 
-            if (!inAttackRange)
+            if (!targetInAttackRange)
             {
                 mover.MoveTo(target.transform.position);
             }
@@ -46,17 +48,38 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
+            transform.LookAt(target.transform);
+            
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
                 actionScheduler.StartAction(this);
                 timeSinceLastAttack = 0;
-                animator.SetTrigger("attack"); // triggers Hit()
+                TriggerAttack(); // triggers Hit()
             }
         }
 
-        // Animation Event: occurs when attack makes contact
+        private void TriggerAttack()
+        {
+            animator.ResetTrigger("stopAttack");
+            animator.SetTrigger("attack");
+        }
+
+        public void SetAttackTarget(GameObject gameObject)
+        {
+            target = gameObject;
+        }
+
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            if (combatTarget == null) return false;
+            if (combatTarget.GetComponent<Health>().IsDead()) return false;
+            return true;
+        }
+
+        // Animation Event: occurs when attack animation makes contact
         private void Hit()
         {
+            if (target == null) return;
             DealDamage(weaponDamage, target);
         }
 
@@ -64,18 +87,7 @@ namespace RPG.Combat
         {
             Vector3 direction = transform.position;
             combatTarget.GetComponent<Health>().TakeDamage(damage, direction);
-            print("Health: " + combatTarget.GetComponent<Health>().health);
-        }
-
-        public void SetAttackTarget(GameObject combatTarget)
-        {
-            target = combatTarget;
-        }
-
-        public void Cancel()
-        {
-            target = null;
-            print("Cancelling action: " + this);
+            print("Health: " + combatTarget.GetComponent<Health>().healthPoints);
         }
 
         // Use .sqrMagnitude to measure distance - it avoids .magnitude square root operation. Then, compare distance^2 with weaponRange^2
@@ -94,6 +106,18 @@ namespace RPG.Combat
         private float WeaponRangeSquared()
         {
             return weaponRange * weaponRange;
+        }
+
+        public void Cancel()
+        {
+            StopAttack();
+            target = null;
+        }
+
+        private void StopAttack()
+        {
+            animator.ResetTrigger("attack");
+            animator.SetTrigger("stopAttack");
         }
     }
 }

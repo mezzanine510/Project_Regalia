@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!136 &8394287414443585824
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3505923850916783939}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.91
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5429912915592523578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,21 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56005c41fe3d4ac49bf0cb85e949ee75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 25
---- !u!136 &8394287414443585824
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3505923850916783939}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  healthPoints: 20
 --- !u!1001 &2949534103086621404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -173,10 +173,6 @@ PrefabInstance:
     - target: {fileID: 1210396568976105848, guid: 211fd03aed7177a44a730dccf1be1f25,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 384372881, guid: 211fd03aed7177a44a730dccf1be1f25, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

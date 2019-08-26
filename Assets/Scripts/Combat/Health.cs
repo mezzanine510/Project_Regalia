@@ -2,23 +2,37 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Health : MonoBehaviour {
-        [SerializeField] public float health = 20f;
+    public class Health : MonoBehaviour
+    {
+        [SerializeField] public float healthPoints = 20f;
+        bool isDead = false;
 
         public void TakeDamage(float damage, Vector3 direction)
         {
-            health -= damage;
+            healthPoints = Mathf.Max(healthPoints - damage, 0);
 
-            if (health <= 0)
+            if (healthPoints == 0)
             {
-                Vector3 explosionPos = direction;
-                Rigidbody rigidbody = GetComponent<Rigidbody>();
-                rigidbody.AddExplosionForce(2000f, explosionPos, 500f, 0.25f);
-                print("Destroyed " + gameObject);
+                Die();
+                // Vector3 explosionPos = direction;
+                // Rigidbody rigidbody = GetComponent<Rigidbody>();
+                // rigidbody.AddExplosionForce(2000f, explosionPos, 500f, 0.25f);
+                // print("Destroyed " + gameObject);
             }
         }
 
-        private void OnDestroy() 
+        public bool IsDead()
+        {
+            return isDead;
+        }
+
+        private void Die()
+        {
+            GetComponent<Animator>().SetTrigger("die");
+            isDead = true;
+        }
+
+        private void OnDestroy()
         {
 
         }
