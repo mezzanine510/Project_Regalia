@@ -29,9 +29,9 @@ namespace RPG.Combat
 
         private void Update()
         {
+            timeSinceLastAttack += Time.deltaTime;
             if (!target) return;
 
-            timeSinceLastAttack += Time.deltaTime;
             bool targetInAttackRange = TargetInAttackRange(target);
 
             if (!targetInAttackRange)
@@ -45,28 +45,33 @@ namespace RPG.Combat
             }
         }
 
-        public void SetAttackTarget(GameObject gameObject)
+        public void Attack(GameObject gameObject)
         {
             target = gameObject;
         }
         
         private void AttackBehaviour()
-        {
-            transform.LookAt(target.transform);
-            
+        {   
             // Cancelling the attack/target might need to be put elsewhere
             if (target.GetComponent<Health>().IsDead())
             {
-                Cancel();
+                animator.ResetTrigger("attack"); // Using this instead of StopAttack() or Cancel() helps avoid the last attack animation from getting cut off on target death
                 return;
             }
+
+            transform.LookAt(target.transform);
 
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
                 actionScheduler.StartAction(this);
-                timeSinceLastAttack = 0;
+                RestartAttackTimer();
                 TriggerAttack();
             }
+        }
+
+        private void RestartAttackTimer()
+        {
+                timeSinceLastAttack = 0;
         }
 
         private void TriggerAttack() // triggers Hit() timed by animation
@@ -93,7 +98,6 @@ namespace RPG.Combat
         {
             Vector3 direction = transform.position;
             target.GetComponent<Health>().TakeDamage(damage, direction);
-            
             print("Health: " + target.GetComponent<Health>().healthPoints);
         }
 
@@ -120,6 +124,7 @@ namespace RPG.Combat
             target = null;
         }
 
+        // BUG: possibly causing attack swing animation to end prematurely on target death
         private void TriggerStopAttack()
         {
             animator.ResetTrigger("attack");
