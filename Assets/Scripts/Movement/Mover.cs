@@ -22,6 +22,14 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
+        private void UpdateAnimator()
+        {
+            Vector3 velocity = navMeshAgent.velocity;
+            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+            float speed = localVelocity.z;
+            animator.SetFloat("forwardSpeed", speed);
+        }
+
         public void MoveTo(Vector3 destination)
         {
             actionScheduler.StartAction(this);
@@ -38,14 +46,6 @@ namespace RPG.Movement
         {
             StopMoving();
             print("Cancelling action: " + this);
-        }
-
-        private void UpdateAnimator()
-        {
-            Vector3 velocity = navMeshAgent.velocity;
-            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-            float speed = localVelocity.z;
-            animator.SetFloat("forwardSpeed", speed);
         }
     }
 }

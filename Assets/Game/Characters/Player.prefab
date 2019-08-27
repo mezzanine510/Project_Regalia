@@ -191,12 +191,11 @@ GameObject:
   - component: {fileID: 6837010806174317115}
   - component: {fileID: 5216451705218437289}
   - component: {fileID: 5494069535872235452}
-  - component: {fileID: 3455207732523980597}
   - component: {fileID: 5451434344116932028}
   - component: {fileID: 614437106656235082}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -348,18 +347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5792535425f674d96e2c143ef7272b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3455207732523980597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114926728963880445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8b518a9695899a4f9ea6b1e50fd7301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5451434344116932028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56005c41fe3d4ac49bf0cb85e949ee75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 8
+  healthPoints: 30
 --- !u!114 &614437106656235082
 MonoBehaviour:
   m_ObjectHideFlags: 0

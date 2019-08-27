@@ -11,19 +11,10 @@ namespace RPG.Combat
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
 
-            if (healthPoints == 0)
+            if (healthPoints <= 0)
             {
                 Die();
-                // Vector3 explosionPos = direction;
-                // Rigidbody rigidbody = GetComponent<Rigidbody>();
-                // rigidbody.AddExplosionForce(2000f, explosionPos, 500f, 0.25f);
-                // print("Destroyed " + gameObject);
             }
-        }
-
-        public bool IsDead()
-        {
-            return isDead;
         }
 
         private void Die()
@@ -32,9 +23,9 @@ namespace RPG.Combat
             isDead = true;
         }
 
-        private void OnDestroy()
+        public bool IsDead()
         {
-
+            return isDead;
         }
     }
 }

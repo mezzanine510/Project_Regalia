@@ -30,7 +30,6 @@ namespace RPG.Combat
         private void Update()
         {
             if (!target) return;
-            if (target.GetComponent<Health>().IsDead()) return;
 
             timeSinceLastAttack += Time.deltaTime;
             bool targetInAttackRange = TargetInAttackRange(target);
@@ -46,51 +45,58 @@ namespace RPG.Combat
             }
         }
 
+        public void SetAttackTarget(GameObject gameObject)
+        {
+            target = gameObject;
+        }
+        
         private void AttackBehaviour()
         {
             transform.LookAt(target.transform);
             
+            // Cancelling the attack/target might need to be put elsewhere
+            if (target.GetComponent<Health>().IsDead())
+            {
+                Cancel();
+                return;
+            }
+
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
                 actionScheduler.StartAction(this);
                 timeSinceLastAttack = 0;
-                TriggerAttack(); // triggers Hit()
+                TriggerAttack();
             }
         }
 
-        private void TriggerAttack()
+        private void TriggerAttack() // triggers Hit() timed by animation
         {
             animator.ResetTrigger("stopAttack");
             animator.SetTrigger("attack");
         }
 
-        public void SetAttackTarget(GameObject gameObject)
+        public bool CanAttack(GameObject combatTarget)
         {
-            target = gameObject;
-        }
+            Health targetToTest = combatTarget.GetComponent<Health>();
+            if (targetToTest.IsDead() || combatTarget == null) return false;
 
-        public bool CanAttack(CombatTarget combatTarget)
-        {
-            if (combatTarget == null) return false;
-            if (combatTarget.GetComponent<Health>().IsDead()) return false;
             return true;
         }
 
-        // Animation Event: occurs when attack animation makes contact
         private void Hit()
         {
             if (target == null) return;
             DealDamage(weaponDamage, target);
         }
 
-        private void DealDamage(float damage, GameObject combatTarget)
+        private void DealDamage(float damage, GameObject target)
         {
             Vector3 direction = transform.position;
-            combatTarget.GetComponent<Health>().TakeDamage(damage, direction);
-            print("Health: " + combatTarget.GetComponent<Health>().healthPoints);
+            target.GetComponent<Health>().TakeDamage(damage, direction);
+            
+            print("Health: " + target.GetComponent<Health>().healthPoints);
         }
 
-        // Use .sqrMagnitude to measure distance - it avoids .magnitude square root operation. Then, compare distance^2 with weaponRange^2
         private bool TargetInAttackRange(GameObject target)
         {
             if (DistanceSquared(target) < WeaponRangeSquared()) return true;
@@ -110,11 +116,11 @@ namespace RPG.Combat
 
         public void Cancel()
         {
-            StopAttack();
+            TriggerStopAttack();
             target = null;
         }
 
-        private void StopAttack()
+        private void TriggerStopAttack()
         {
             animator.ResetTrigger("attack");
             animator.SetTrigger("stopAttack");
