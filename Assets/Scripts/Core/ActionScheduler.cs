@@ -16,7 +16,7 @@ namespace RPG.Core
             currentAction = action;
         }
 
-        // NOTE: alternate action cancellation method
+        // NOTE: alternate action cancellation method used on enemy death to cancel all actions states
         public void CancelCurrentAction()
         {
             StartAction(null);

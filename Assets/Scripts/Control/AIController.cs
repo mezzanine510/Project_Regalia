@@ -44,14 +44,22 @@ namespace RPG.Control
             return false;
         }
 
+        // TODO: refactor - duplicate of method in Fighter.cs
         private float DistanceToTargetSquared(GameObject target)
         {
             return (transform.position - target.transform.position).sqrMagnitude;
         }
 
+        // TODO: refactor - duplicate of method in Fighter.cs
         private float ChaseDistanceSquared()
         {
             return chaseDistance * chaseDistance;
+        }
+
+        // Called by Unity
+        private void OnDrawGizmosSelected() {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, chaseDistance);
         }
     }
 
