@@ -9,16 +9,20 @@ namespace RPG.Movement
         private ActionScheduler actionScheduler;
         private Animator animator;
         private NavMeshAgent navMeshAgent;
+        private Health health;
 
         private void Awake()
         {
             actionScheduler = GetComponent<ActionScheduler>();
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
+            health = GetComponent<Health>();
         }
 
         private void Update() 
         {
+            navMeshAgent.enabled = !health.IsDead();
+            // if (health.IsDead()) navMeshAgent.enabled = false;
             UpdateAnimator();
         }
 
@@ -37,15 +41,9 @@ namespace RPG.Movement
             navMeshAgent.isStopped = false;
         }
 
-        public void StopMoving()
-        {
-            navMeshAgent.isStopped = true;
-        }
-
         public void Cancel()
         {
-            StopMoving();
-            print("Cancelling action: " + this);
+            navMeshAgent.isStopped = true;
         }
     }
 }

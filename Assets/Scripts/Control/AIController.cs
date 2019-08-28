@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RPG.Combat;
 using RPG.Movement;
+using RPG.Core;
 
 namespace RPG.Control
 {
@@ -23,13 +24,9 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (health.IsDead())
-            {
-                mover.StopMoving();
-                return;
-            }
+            if (health.IsDead()) return;
             
-            if (player == null) return;
+            // if (player == null) return;
 
             if (TargetInAggroRange(player))
             {

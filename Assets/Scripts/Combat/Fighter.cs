@@ -30,6 +30,7 @@ namespace RPG.Combat
         private void Update()
         {
             timeSinceLastAttack += Time.deltaTime;
+            
             if (!target) return;
 
             bool targetInAttackRange = TargetInAttackRange(target);
@@ -41,7 +42,6 @@ namespace RPG.Combat
             else
             {
                 AttackBehaviour();
-                mover.StopMoving();
             }
         }
 
@@ -51,8 +51,7 @@ namespace RPG.Combat
         }
         
         private void AttackBehaviour()
-        {   
-            // Cancelling the attack/target might need to be put elsewhere
+        {
             if (target.GetComponent<Health>().IsDead())
             {   
                 return;

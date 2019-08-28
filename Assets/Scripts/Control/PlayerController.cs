@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.AI;
+using RPG.Core;
 using RPG.Movement;
 using RPG.Combat;
 
@@ -17,16 +17,11 @@ namespace RPG.Control
             mover = GetComponent<Mover>();
             fighter = GetComponent<Fighter>();
             health = GetComponent<Health>();
-            // navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         void Update()
         {
-            if (health.IsDead())
-            {
-                mover.StopMoving();
-                return;
-            }
+            if (health.IsDead()) return;
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
         }
