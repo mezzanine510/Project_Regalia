@@ -54,8 +54,7 @@ namespace RPG.Combat
         {   
             // Cancelling the attack/target might need to be put elsewhere
             if (target.GetComponent<Health>().IsDead())
-            {
-                animator.ResetTrigger("attack"); // Using this instead of StopAttack() or Cancel() helps avoid the last attack animation from getting cut off on target death
+            {   
                 return;
             }
 
@@ -80,12 +79,16 @@ namespace RPG.Combat
             animator.SetTrigger("attack");
         }
 
-        public bool CanAttack(GameObject combatTarget)
+        public bool CanAttack(GameObject target)
         {
-            Health targetToTest = combatTarget.GetComponent<Health>();
-            if (targetToTest.IsDead() || combatTarget == null) return false;
-
-            return true;
+            Health targetHealthComponent = target.GetComponent<Health>();
+            if (    targetHealthComponent == null
+                 || targetHealthComponent.IsDead()
+                 || !target.GetComponent<CombatTarget>())
+            {
+                return false;
+            }
+            else return true;
         }
 
         private void Hit()
@@ -124,7 +127,6 @@ namespace RPG.Combat
             target = null;
         }
 
-        // BUG: possibly causing attack swing animation to end prematurely on target death
         private void TriggerStopAttack()
         {
             animator.ResetTrigger("attack");

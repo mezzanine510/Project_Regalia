@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using RPG.Movement;
 using RPG.Combat;
 
@@ -9,15 +10,23 @@ namespace RPG.Control
     {
         Mover mover;
         Fighter fighter;
+        Health health;
 
         void Awake()
         {
             mover = GetComponent<Mover>();
             fighter = GetComponent<Fighter>();
+            health = GetComponent<Health>();
+            // navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         void Update()
         {
+            if (health.IsDead())
+            {
+                mover.StopMoving();
+                return;
+            }
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
         }
@@ -29,7 +38,7 @@ namespace RPG.Control
             foreach (RaycastHit hit in hits)
             {
                 GameObject target = hit.collider.gameObject;
-                if (!target.GetComponent<CombatTarget>()) continue;
+                
                 if (!fighter.CanAttack(target)) continue;
 
                 if (Input.GetMouseButton(0))

@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using RPG.Combat;
+using RPG.Movement;
 
 namespace RPG.Control
 {
@@ -6,18 +8,40 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
+        Fighter fighter;
+        Health health;
+        Mover mover;
+        GameObject player;
 
-        private void Update() {
-            GameObject player = GameObject.FindWithTag("Player");
-            // if (player == null) return;
+        private void Awake()
+        {
+            fighter = GetComponent<Fighter>();
+            health = GetComponent<Health>();
+            mover = GetComponent<Mover>();
+            player = GameObject.FindWithTag("Player");
+        }
 
-            if (TargetInRange(player))
+        private void Update()
+        {
+            if (health.IsDead())
             {
-                print(gameObject.name + " is chasing " + player.name + "!!!");
+                mover.StopMoving();
+                return;
+            }
+            
+            if (player == null) return;
+
+            if (TargetInAggroRange(player))
+            {
+                fighter.Attack(player);
+            }
+            else
+            {
+                fighter.Cancel();
             }
         }
 
-        private bool TargetInRange(GameObject target)
+        private bool TargetInAggroRange(GameObject target)
         {
             if (DistanceToTargetSquared(target) < ChaseDistanceSquared()) return true;
             return false;
