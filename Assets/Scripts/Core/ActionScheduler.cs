@@ -4,7 +4,7 @@ namespace RPG.Core
 {
     public class ActionScheduler : MonoBehaviour
     {
-        IAction currentAction;
+        public IAction currentAction;
 
         public void StartAction(IAction action)
         {
@@ -16,7 +16,7 @@ namespace RPG.Core
             currentAction = action;
         }
 
-        // NOTE: alternate action cancellation method used on enemy death to cancel all actions states
+        // NOTE: alternate action cancellation method used on enemy death to cancel all action states
         public void CancelCurrentAction()
         {
             StartAction(null);

@@ -33,9 +33,7 @@ namespace RPG.Combat
             
             if (!target) return;
 
-            bool targetInAttackRange = TargetInAttackRange(target);
-
-            if (!targetInAttackRange)
+            if (!TargetInAttackRange(target))
             {
                 mover.MoveTo(target.transform.position);
             }
@@ -81,12 +79,9 @@ namespace RPG.Combat
         public bool CanAttack(GameObject target)
         {
             Health targetHealthComponent = target.GetComponent<Health>();
+
             if (    targetHealthComponent == null
-                 || targetHealthComponent.IsDead()
-                 || !target.GetComponent<CombatTarget>())
-            {
-                return false;
-            }
+                 || targetHealthComponent.IsDead()) return false;
             else return true;
         }
 
@@ -124,6 +119,7 @@ namespace RPG.Combat
         {
             TriggerStopAttack();
             target = null;
+            print("Deselected target!");
         }
 
         private void TriggerStopAttack()

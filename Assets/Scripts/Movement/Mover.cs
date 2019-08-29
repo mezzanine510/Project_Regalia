@@ -22,7 +22,6 @@ namespace RPG.Movement
         private void Update() 
         {
             navMeshAgent.enabled = !health.IsDead();
-            // if (health.IsDead()) navMeshAgent.enabled = false;
             UpdateAnimator();
         }
 
@@ -34,9 +33,14 @@ namespace RPG.Movement
             animator.SetFloat("forwardSpeed", speed);
         }
 
-        public void MoveTo(Vector3 destination)
+        public void StartMoveAction(Vector3 destination)
         {
             actionScheduler.StartAction(this);
+            MoveTo(destination);
+        }
+
+        public void MoveTo(Vector3 destination)
+        {
             navMeshAgent.destination = destination;
             navMeshAgent.isStopped = false;
         }
