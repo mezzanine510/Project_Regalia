@@ -35,7 +35,7 @@ namespace RPG.Combat
 
             if (!TargetInAttackRange(target))
             {
-                mover.MoveTo(target.transform.position);
+                mover.StartMoveAction(target.transform.position);
             }
             else
             {
@@ -67,7 +67,7 @@ namespace RPG.Combat
 
         private void RestartAttackTimer()
         {
-                timeSinceLastAttack = 0;
+            timeSinceLastAttack = 0;
         }
 
         private void TriggerAttack() // triggers Hit() timed by animation
@@ -106,7 +106,6 @@ namespace RPG.Combat
 
         private float DistanceSquared(GameObject target)
         {
-            
             return (transform.position - target.transform.position).sqrMagnitude;
         }
 
@@ -117,15 +116,20 @@ namespace RPG.Combat
 
         public void Cancel()
         {
-            TriggerStopAttack();
-            target = null;
+            ResetAttackAnimationTriggers();
+            DropTarget();
             print("Deselected target!");
         }
 
-        private void TriggerStopAttack()
+        private void ResetAttackAnimationTriggers()
         {
             animator.ResetTrigger("attack");
             animator.SetTrigger("stopAttack");
+        }
+
+        private void DropTarget()
+        {
+            target = null;
         }
     }
 }

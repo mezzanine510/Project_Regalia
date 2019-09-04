@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using RPG.Core;
 using RPG.Combat;
 using RPG.Movement;
@@ -9,10 +8,10 @@ namespace RPG.Control
     
     public class AIController : MonoBehaviour
     {
-        [SerializeField] float chaseDistance = 5f;
-        [SerializeField] float suspicionTime = 5f;
         [SerializeField] PatrolPath patrolPath;
         [SerializeField] float waypointTolerance = 1f;
+        [SerializeField] float chaseDistance = 5f;
+        [SerializeField] float suspicionTime = 5f;
 
         Fighter fighter;
         Health health;
@@ -20,9 +19,9 @@ namespace RPG.Control
         GameObject player;
 
         Vector3 guardPosition;
+        Vector3 lastKnownPlayerLocation;
         float timeSincePlayerSeen = Mathf.Infinity;
         int currentWaypointIndex = 0;
-        // Transform[] waypoints;
 
         private void Awake()
         {
@@ -35,24 +34,20 @@ namespace RPG.Control
 
         private void Update()
         {
-            print(GetComponent<ActionScheduler>().currentAction);
             if (health.IsDead()) return;
 
             if (TargetInAggroRange(player) && fighter.CanAttack(player))
             {
                 timeSincePlayerSeen = 0;
                 AttackBehaviour();
-                // print("Attacking"); // debug
             }
             else if (timeSincePlayerSeen < suspicionTime)
             {
                 SuspicionBehaviour();
-                // print("Suspicious"); // debug
             }
             else
             {
                 PatrolBehaviour();
-                // print("Patrolling"); // debug
             }
 
             timeSincePlayerSeen += Time.deltaTime;
@@ -65,8 +60,8 @@ namespace RPG.Control
 
         private void SuspicionBehaviour()
         {
-            fighter.Cancel(); // potential bug
-            // GetComponent<ActionScheduler>().CancelCurrentAction();
+            GetComponent<ActionScheduler>().CancelCurrentAction();
+            // fighter.Cancel(); // use with mover.StartMoveAction(target.transform.position) in Fighter.cs line 38
         }
 
         private void PatrolBehaviour()
