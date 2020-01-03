@@ -35,7 +35,7 @@ namespace RPG.Combat
 
             if (!TargetInAttackRange(target))
             {
-                mover.StartMoveAction(target.transform.position, 1f);
+                mover.StartMoveAction(target.transform.position);
             }
             else
             {

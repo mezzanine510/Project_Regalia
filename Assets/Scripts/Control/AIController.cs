@@ -12,7 +12,8 @@ namespace RPG.Control
         [SerializeField] float waypointTolerance = 1f;
         [SerializeField] float chaseDistance = 5f;
         [SerializeField] float suspicionTime = 5f;
-        [SerializeField] float patrolSpeedFraction = 0.2f;
+        [SerializeField] float patrolSpeed = 2f;
+        [SerializeField] float runSpeed = 4f;
 
         Fighter fighter;
         Health health;
@@ -55,7 +56,8 @@ namespace RPG.Control
         }
 
         private void AttackBehaviour()
-        {
+        {   
+            mover.SetSpeed(runSpeed);
             fighter.Attack(player);
         }
 
@@ -79,7 +81,8 @@ namespace RPG.Control
                 nextPosition = GetCurrentWaypoint();
             }
 
-            mover.StartMoveAction(nextPosition, patrolSpeedFraction);
+            mover.SetSpeed(patrolSpeed);
+            mover.StartMoveAction(nextPosition);
         }
 
         // compare squared distance for better performance
