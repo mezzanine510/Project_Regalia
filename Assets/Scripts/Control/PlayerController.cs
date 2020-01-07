@@ -5,7 +5,6 @@ using RPG.Combat;
 
 namespace RPG.Control
 {
-
     public class PlayerController : MonoBehaviour
     {
         Mover mover;

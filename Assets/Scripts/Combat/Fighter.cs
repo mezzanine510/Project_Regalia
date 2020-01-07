@@ -24,7 +24,7 @@ namespace RPG.Combat
             mover = GetComponent<Mover>();
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-            timeSinceLastAttack = timeBetweenAttacks + 1; // avoids bug on scene load where character doesn't attack right away 
+            timeSinceLastAttack = Mathf.Infinity;
         }
 
         private void Update()
