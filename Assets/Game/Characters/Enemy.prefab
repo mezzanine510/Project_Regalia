@@ -16,6 +16,8 @@ MonoBehaviour:
   waypointTolerance: 1
   chaseDistance: 5
   suspicionTime: 5
+  patrolSpeed: 2
+  runSpeed: 4
 --- !u!1001 &7264031802593947108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,26 +25,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6082266717968812711, guid: 211fd03aed7177a44a730dccf1be1f25,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5879540833699294524, guid: 211fd03aed7177a44a730dccf1be1f25,
-        type: 3}
-      propertyPath: weaponDamage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6020936341746998677, guid: 211fd03aed7177a44a730dccf1be1f25,
-        type: 3}
-      propertyPath: healthPoints
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6530023573528952478, guid: 211fd03aed7177a44a730dccf1be1f25,
-        type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
     - target: {fileID: 1210396568976105848, guid: 211fd03aed7177a44a730dccf1be1f25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -103,6 +85,31 @@ PrefabInstance:
       propertyPath: m_Speed
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2218955603178810218, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 5879540833699294524, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: weaponDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020936341746998677, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: healthPoints
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6082266717968812711, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530023573528952478, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 211fd03aed7177a44a730dccf1be1f25, type: 3}
 --- !u!1 &3505923850916783939 stripped
@@ -124,11 +131,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8359586030443859100}
     m_Modifications:
-    - target: {fileID: 3046943016815017693, guid: 09f63a136865405419b8bf00755cd0b0,
-        type: 3}
-      propertyPath: m_Name
-      value: Knight
-      objectReference: {fileID: 0}
     - target: {fileID: 3046943016675348002, guid: 09f63a136865405419b8bf00755cd0b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -183,6 +185,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046943016815017693, guid: 09f63a136865405419b8bf00755cd0b0,
+        type: 3}
+      propertyPath: m_Name
+      value: Knight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f63a136865405419b8bf00755cd0b0, type: 3}
