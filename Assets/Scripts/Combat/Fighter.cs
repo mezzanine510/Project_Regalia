@@ -119,7 +119,7 @@ namespace RPG.Combat
         {
             ResetAttackAnimationTriggers();
             DropTarget();
-            print("Deselected target!");
+            mover.Cancel();
         }
 
         private void ResetAttackAnimationTriggers()

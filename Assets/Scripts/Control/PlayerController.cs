@@ -48,7 +48,6 @@ namespace RPG.Control
         public bool InteractWithMovement()
         {
             // if (!Input.GetMouseButton(0)) return false;
-
             RaycastHit hit;
             bool rayHitSomething = Physics.Raycast(GetMouseRay(), out hit);
 
