@@ -41,8 +41,8 @@ namespace RPG.Movement
 
         public void MoveTo(Vector3 destination)
         {
-            navMeshAgent.destination = destination;
             navMeshAgent.isStopped = false;
+            navMeshAgent.destination = destination;
         }
 
         public void SetSpeed(float speed)
@@ -52,6 +52,7 @@ namespace RPG.Movement
 
         public void Cancel()
         {
+            navMeshAgent.destination = transform.position;
             navMeshAgent.isStopped = true;
         }
     }
