@@ -85,6 +85,7 @@ namespace RPG.Combat
             else return true;
         }
 
+        // Animation Event
         private void Hit()
         {
             if (target == null) return;
