@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Playables;
 using RPG.Control;
-using RPG.Movement;
+// using RPG.Movement;
+using RPG.Core;
 
 namespace RPG.Cinematics
 {
@@ -9,27 +10,25 @@ namespace RPG.Cinematics
     {
         GameObject player;
         PlayerController playerController;
-        Mover mover;
         PlayableDirector playableDirector;
 
         private void Awake()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.FindWithTag("Player");
             playerController = player.GetComponent<PlayerController>();
-            mover = player.GetComponent<Mover>();
             playableDirector = GetComponent<PlayableDirector>();
             playableDirector.played += DisableControl;
             playableDirector.stopped += EnableControl;
         }
 
-        public void DisableControl(PlayableDirector playableDirector)
+        // pb is just a placeholder, since the Delegate event needs to take a PlayableDirector argument
+        public void DisableControl(PlayableDirector pb)
         {
-            mover.Cancel();
+            player.GetComponent<ActionScheduler>().CancelCurrentAction();
             playerController.enabled = false;
-            // mover.enabled = false;
         }
 
-        public void EnableControl(PlayableDirector playableDirector)
+        public void EnableControl(PlayableDirector pb)
         {
             playerController.enabled = true;
         }
