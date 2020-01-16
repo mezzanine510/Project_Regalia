@@ -101,11 +101,11 @@ namespace RPG.Combat
 
         private bool TargetInAttackRange(GameObject target)
         {
-            if (DistanceSquared(target) < WeaponRangeSquared()) return true;
+            if (DistanceToTargetSquared(target) < WeaponRangeSquared()) return true;
             return false;
         }
 
-        private float DistanceSquared(GameObject target)
+        private float DistanceToTargetSquared(GameObject target)
         {
             return (transform.position - target.transform.position).sqrMagnitude;
         }
