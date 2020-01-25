@@ -5,18 +5,13 @@ namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
-        Collider playerCollider;
-
-        private void Awake()
-        {
-            playerCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
-        }
+        [SerializeField] int sceneToLoad;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other == playerCollider)
+            if (other.tag == "Player")
             {
-                SceneManager.LoadSceneAsync(1);
+                SceneManager.LoadSceneAsync(sceneToLoad);
             }
         }
     }
