@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace RPG.SceneManagement
 {
@@ -11,8 +12,17 @@ namespace RPG.SceneManagement
         {
             if (other.tag == "Player")
             {
-                SceneManager.LoadSceneAsync(sceneToLoad);
+                StartCoroutine(Transition());
             }
+        }
+
+        private IEnumerator Transition()
+        {
+            // SceneManager.LoadSceneAsync(sceneToLoad);
+            DontDestroyOnLoad(gameObject);
+            yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            print("Scene loaded");
+            Destroy(gameObject);
         }
     }
 }
