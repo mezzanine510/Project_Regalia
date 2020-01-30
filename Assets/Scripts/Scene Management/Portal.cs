@@ -7,8 +7,14 @@ namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
+        enum DestinationIdentifier
+        {
+            A, B, C, D, E
+        }
+
         [SerializeField] int sceneToLoad;
         [SerializeField] Transform spawnPoint;
+        [SerializeField] DestinationIdentifier destination;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -22,12 +28,7 @@ namespace RPG.SceneManagement
         {
             DontDestroyOnLoad(gameObject);
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
-            print("THIS: " + this);
-            print("gameObject: " + gameObject);
-            
             Portal targetPortal = GetOtherPortal();
-            print("targetPortal: " + targetPortal);
-            print("targetPortal.spawnPoint: " + targetPortal.spawnPoint);
             UpdatePlayer(targetPortal);
 
             Destroy(gameObject);
@@ -37,10 +38,12 @@ namespace RPG.SceneManagement
         {
             foreach (Portal portal in FindObjectsOfType<Portal>())
             {
-                if (portal == this)
+                DestinationIdentifier otherPortal = portal.destination;
+                if (portal == this || portal.destination != this.destination)
                 {
                     continue;
-                };
+                }
+                
                 return portal;
             }
 
