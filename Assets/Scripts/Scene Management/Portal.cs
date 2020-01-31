@@ -27,6 +27,7 @@ namespace RPG.SceneManagement
         private IEnumerator Transition()
         {
             DontDestroyOnLoad(gameObject);
+            GameObject.FindObjectOfType<Canvas>().GetComponent<CanvasGroup>().alpha = 1;
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
             Portal targetPortal = GetOtherPortal();
             UpdatePlayer(targetPortal);
