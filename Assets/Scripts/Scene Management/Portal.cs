@@ -26,9 +26,15 @@ namespace RPG.SceneManagement
 
         private IEnumerator Transition()
         {
+            if(sceneToLoad < 0)
+            {
+                Debug.LogError("Scene to load is not set, use the Editor to set it.");
+            }
+
+            Fader fader = FindObjectOfType<Fader>();
             DontDestroyOnLoad(gameObject);
-            GameObject.FindObjectOfType<Canvas>().GetComponent<CanvasGroup>().alpha = 1;
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+
             Portal targetPortal = GetOtherPortal();
             UpdatePlayer(targetPortal);
 

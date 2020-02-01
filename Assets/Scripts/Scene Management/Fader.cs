@@ -13,16 +13,7 @@ namespace RPG.SceneManagement
         }
 
         private void Start() {
-            StartCoroutine(FadeOutIn());
-            // StartCoroutine(FadeOut(2f));
-        }
-
-        IEnumerator FadeOutIn()
-        {
-            yield return FadeOut(2f);
-            print("Faded out.");
-            yield return FadeIn(2f);
-            print("Faded in.");
+            
         }
 
         public IEnumerator FadeOut(float time)
