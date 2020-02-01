@@ -7,14 +7,17 @@ namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
+        [SerializeField] int sceneToLoad;
+        [SerializeField] Transform spawnPoint;
+        [SerializeField] DestinationIdentifier destination;
+        [SerializeField] float fadeOutTime = 0.5f;
+        [SerializeField] float fadeInTime = 0.5f;
+        [SerializeField] float fadeWaitTime = 0.5f;
+
         enum DestinationIdentifier
         {
             A, B, C, D, E
         }
-
-        [SerializeField] int sceneToLoad;
-        [SerializeField] Transform spawnPoint;
-        [SerializeField] DestinationIdentifier destination;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -26,10 +29,22 @@ namespace RPG.SceneManagement
 
         private IEnumerator Transition()
         {
+            if(sceneToLoad < 0)
+            {
+                Debug.LogError("Scene to load is not set, use the Editor to set it.");
+            }
+
             DontDestroyOnLoad(gameObject);
+
+            Fader fader = FindObjectOfType<Fader>();
+            yield return StartCoroutine(fader.FadeOut(fadeOutTime));
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+
             Portal targetPortal = GetOtherPortal();
             UpdatePlayer(targetPortal);
+            yield return new WaitForSeconds(fadeWaitTime); // wait to make sure everything loads
+
+            yield return StartCoroutine(fader.FadeIn(fadeInTime));
 
             Destroy(gameObject);
         }
