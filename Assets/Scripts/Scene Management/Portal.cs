@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using RPG.Saving;
 
 namespace RPG.SceneManagement
 {
@@ -37,8 +38,15 @@ namespace RPG.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             Fader fader = FindObjectOfType<Fader>();
+
             yield return StartCoroutine(fader.FadeOut(fadeOutTime));
+
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            savingWrapper.Save();
+
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            
+            savingWrapper.Load();
 
             Portal targetPortal = GetOtherPortal();
             UpdatePlayer(targetPortal);
