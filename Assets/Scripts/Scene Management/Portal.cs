@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using RPG.Saving;
 
 namespace RPG.SceneManagement
 {
@@ -37,12 +38,22 @@ namespace RPG.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             Fader fader = FindObjectOfType<Fader>();
+
             yield return StartCoroutine(fader.FadeOut(fadeOutTime));
+
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            savingWrapper.Save();
+
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            
+            savingWrapper.Load();
 
             Portal targetPortal = GetOtherPortal();
             UpdatePlayer(targetPortal);
-            yield return new WaitForSeconds(fadeWaitTime); // wait to make sure everything loads
+
+            savingWrapper.Save(); // save again once player is positioned at the right spot to avoid backloading through portal
+
+            yield return new WaitForSeconds(fadeWaitTime); // wait to make sure everything loads (and saves)
 
             yield return StartCoroutine(fader.FadeIn(fadeInTime));
 
