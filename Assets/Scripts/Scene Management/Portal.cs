@@ -50,7 +50,10 @@ namespace RPG.SceneManagement
 
             Portal targetPortal = GetOtherPortal();
             UpdatePlayer(targetPortal);
-            yield return new WaitForSeconds(fadeWaitTime); // wait to make sure everything loads
+
+            savingWrapper.Save(); // save again once player is positioned at the right spot to avoid backloading through portal
+
+            yield return new WaitForSeconds(fadeWaitTime); // wait to make sure everything loads (and saves)
 
             yield return StartCoroutine(fader.FadeIn(fadeInTime));
 
