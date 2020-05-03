@@ -10,6 +10,8 @@ namespace RPG.Combat
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 5f;
+        [SerializeField] GameObject weaponPrefab = null;
+        [SerializeField] Transform handTransform = null;
         float timeSinceLastAttack;
 
         Animator animator;
@@ -25,6 +27,7 @@ namespace RPG.Combat
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             timeSinceLastAttack = Mathf.Infinity;
+            SpawnWeapon();
         }
 
         private void Update()
@@ -46,6 +49,11 @@ namespace RPG.Combat
         public void Attack(GameObject gameObject)
         {
             target = gameObject;
+        }
+
+        private void SpawnWeapon()
+        {
+            Instantiate(weaponPrefab, handTransform);
         }
         
         private void AttackBehaviour()
@@ -115,17 +123,17 @@ namespace RPG.Combat
             return weaponRange * weaponRange;
         }
 
+        private void ResetAttackAnimationTriggers()
+        {
+            animator.ResetTrigger("attack");
+            animator.SetTrigger("stopAttack");
+        }
+
         public void Cancel()
         {
             ResetAttackAnimationTriggers();
             DropTarget();
             mover.Cancel();
-        }
-
-        private void ResetAttackAnimationTriggers()
-        {
-            animator.ResetTrigger("attack");
-            animator.SetTrigger("stopAttack");
         }
 
         private void DropTarget()
