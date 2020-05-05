@@ -9,9 +9,9 @@ namespace RPG.Combat
     {
 
         [SerializeField] float timeBetweenAttacks = 1f;
-
         [SerializeField] Transform handTransform = null;
-        [SerializeField] Weapon weapon = null;
+        [SerializeField] Weapon defaultWeapon = null;
+        Weapon currentWeapon = null;
         float timeSinceLastAttack;
 
         Animator animator;
@@ -27,7 +27,7 @@ namespace RPG.Combat
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             timeSinceLastAttack = Mathf.Infinity;
-            SpawnWeapon();
+            EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -51,9 +51,9 @@ namespace RPG.Combat
             target = gameObject;
         }
 
-        private void SpawnWeapon()
+        public void EquipWeapon(Weapon weapon)
         {
-            if (weapon == null) return;
+            currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
             weapon.Spawn(handTransform, animator);
         }
@@ -99,7 +99,7 @@ namespace RPG.Combat
         private void Hit()
         {
             if (target == null) return;
-            DealDamage(weapon.GetWeaponDamage(), target);
+            DealDamage(currentWeapon.GetWeaponDamage(), target);
         }
 
         private void DealDamage(float damage, GameObject target)
@@ -122,7 +122,7 @@ namespace RPG.Combat
 
         private float WeaponRangeSquared()
         {
-            float weaponRange = weapon.GetWeaponRange();
+            float weaponRange = currentWeapon.GetWeaponRange();
             return weaponRange * weaponRange;
         }
 
