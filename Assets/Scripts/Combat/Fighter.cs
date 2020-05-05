@@ -7,9 +7,9 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] float weaponRange = 2f;
+
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 5f;
+
         [SerializeField] Transform handTransform = null;
         [SerializeField] Weapon weapon = null;
         float timeSinceLastAttack;
@@ -99,7 +99,7 @@ namespace RPG.Combat
         private void Hit()
         {
             if (target == null) return;
-            DealDamage(weaponDamage, target);
+            DealDamage(weapon.GetWeaponDamage(), target);
         }
 
         private void DealDamage(float damage, GameObject target)
@@ -122,6 +122,7 @@ namespace RPG.Combat
 
         private float WeaponRangeSquared()
         {
+            float weaponRange = weapon.GetWeaponRange();
             return weaponRange * weaponRange;
         }
 
