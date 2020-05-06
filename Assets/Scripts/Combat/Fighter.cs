@@ -100,7 +100,19 @@ namespace RPG.Combat
         private void Hit()
         {
             if (target == null) return;
-            DealDamage(currentWeapon.GetWeaponDamage(), target);
+
+            if (currentWeapon.HasProjectile())
+            {
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>());
+            }
+            else {
+                DealDamage(currentWeapon.GetWeaponDamage(), target);
+            }
+        }
+
+        private void Shoot()
+        {
+            Hit();
         }
 
         private void DealDamage(float damage, GameObject target)

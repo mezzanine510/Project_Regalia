@@ -1,23 +1,13 @@
 ﻿using UnityEngine;
+using RPG.Core;
 
 namespace RPG.Combat
 {
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] Transform target = null;
         [SerializeField] float speed = 10f;
-        
-        void Awake() {
-            // target = gameObject.GetComponent<Fighter>().target;
-        }
+        Health target = null;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            // transform.LookAt(target.transform);
-        }
-
-        // Update is called once per frame
         void Update()
         {
             if (!target) return;
@@ -26,11 +16,16 @@ namespace RPG.Combat
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
+        public void SetTarget(Health target)
+        {
+            this.target = target;
+        }
+
         private Vector3 GetAimLocation()
         {
             CapsuleCollider targetCapsuleCollider = target.GetComponent<CapsuleCollider>();
-            if (!targetCapsuleCollider) return target.position;
-            return target.position + Vector3.up * targetCapsuleCollider.height / 2;
+            if (!targetCapsuleCollider) return target.transform.position;
+            return target.transform.position + Vector3.up * targetCapsuleCollider.height / 2;
         }
     }
 
