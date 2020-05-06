@@ -337,7 +337,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 1
-  handTransform: {fileID: 5665449849248126572}
+  rightHandTransform: {fileID: 5665449849248126572}
+  leftHandTransform: {fileID: 4349860906057235798}
   defaultWeapon: {fileID: 0}
 --- !u!114 &5494069535872235452
 MonoBehaviour:
