@@ -19,7 +19,7 @@ namespace RPG.Combat
         Mover mover;
         ActionScheduler actionScheduler;
         NavMeshAgent navMeshAgent;
-        GameObject target;
+        public GameObject target;
 
         private void Awake()
         {

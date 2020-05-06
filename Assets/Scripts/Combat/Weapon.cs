@@ -22,7 +22,8 @@ namespace RPG.Combat
                 {
                     handTransform = rightHand;
                 }
-                else{
+                else
+                {
                     handTransform = leftHand;
                 }
 
