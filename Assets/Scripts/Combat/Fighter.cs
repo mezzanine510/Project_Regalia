@@ -101,13 +101,8 @@ namespace RPG.Combat
         {
             if (target == null) return;
 
-            if (currentWeapon.HasProjectile())
-            {
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>());
-            }
-            else {
-                DealDamage(currentWeapon.GetWeaponDamage(), target);
-            }
+            if (currentWeapon.HasProjectile()) currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>());
+            else DealDamage(currentWeapon.GetWeaponDamage(), target);
         }
 
         private void Shoot()
