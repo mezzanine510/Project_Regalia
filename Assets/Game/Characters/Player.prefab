@@ -339,7 +339,8 @@ MonoBehaviour:
   timeBetweenAttacks: 1
   rightHandTransform: {fileID: 5665449849248126572}
   leftHandTransform: {fileID: 4349860906057235798}
-  defaultWeapon: {fileID: 0}
+  defaultWeapon: {fileID: 11400000, guid: 887a967a559c6d04692fe87190ad22d7, type: 2}
+  target: {fileID: 0}
 --- !u!114 &5494069535872235452
 MonoBehaviour:
   m_ObjectHideFlags: 0
