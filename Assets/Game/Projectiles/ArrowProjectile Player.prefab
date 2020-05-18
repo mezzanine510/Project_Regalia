@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 455522750482021930, guid: 6ba0594c97e796644bd59d787934066a,
+        type: 3}
+      propertyPath: homingProjectile
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455522750482021930, guid: 6ba0594c97e796644bd59d787934066a,
+        type: 3}
+      propertyPath: isHomingProjectile
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1234082789122110425, guid: 6ba0594c97e796644bd59d787934066a,
         type: 3}
       propertyPath: m_LocalPosition.x
