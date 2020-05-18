@@ -7,6 +7,7 @@ namespace RPG.Combat
     {
         [SerializeField] float speed = 10f;
         [SerializeField] bool isHomingProjectile = false;
+
         Health target = null;
         float damage = 0;
 
@@ -18,7 +19,7 @@ namespace RPG.Combat
         void Update()
         {
             if (!target) return;
-            if (isHomingProjectile == true) transform.LookAt(GetAimLocation());
+            if (isHomingProjectile) transform.LookAt(GetAimLocation());
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
@@ -37,6 +38,7 @@ namespace RPG.Combat
 
         private void OnTriggerEnter(Collider other) {
             if (other.GetComponent<Health>() != target) return;
+            if (target.IsDead()) return;
             target.TakeDamage(damage, gameObject.transform.position);
             Destroy(gameObject);
 
