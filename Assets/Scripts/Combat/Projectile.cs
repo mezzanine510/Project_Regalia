@@ -19,7 +19,7 @@ namespace RPG.Combat
         void Update()
         {
             if (!target) return;
-            if (isHomingProjectile) transform.LookAt(GetAimLocation());
+            if (isHomingProjectile && !target.IsDead()) transform.LookAt(GetAimLocation());
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
