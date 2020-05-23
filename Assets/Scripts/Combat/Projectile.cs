@@ -8,9 +8,17 @@ namespace RPG.Combat
         [SerializeField] float speed = 10f;
         [SerializeField] bool isHomingProjectile = false;
         [SerializeField] GameObject hitEffect = null;
+        [SerializeField] float maxLifetime = 4;
+        [SerializeField] GameObject[] destroyOnHit = null;
+        [SerializeField] float lifeAfterImpact = 2;
 
         Health target = null;
         float damage = 0;
+
+        private void Awake()
+        {
+            Destroy(gameObject, maxLifetime); // Destroy after 4 seconds
+        }
 
         private void Start()
         {
@@ -44,9 +52,16 @@ namespace RPG.Combat
                 print("WOrks!");
                 Instantiate(hitEffect, transform.position, transform.rotation);
             }
+            speed = 1.5f;
 
             target.TakeDamage(damage, gameObject.transform.position);
-            Destroy(gameObject);
+
+            foreach(GameObject partOfObject in destroyOnHit)
+            {
+                Destroy(partOfObject);
+            }
+
+            Destroy(gameObject, lifeAfterImpact);
         }
     }
 

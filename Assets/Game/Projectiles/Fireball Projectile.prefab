@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6258199014493408513}
   - component: {fileID: 6226337724317648491}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: Fireball Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4858,10 +4858,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 679781f1aa2d0f148b573247c4d2d691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 12
   isHomingProjectile: 0
   hitEffect: {fileID: 2302457091093092515, guid: 69d1b1037536b504884c93bb73d662db,
     type: 3}
+  maxLifetime: 4
+  destroyOnHit:
+  - {fileID: 1191546867014460000}
+  lifeAfterImpact: 0.25
 --- !u!65 &5417632084455169004
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -42,6 +42,11 @@ PrefabInstance:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2302457091073469191, guid: 69d1b1037536b504884c93bb73d662db,
+        type: 3}
+      propertyPath: stopAction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2302457091092795123, guid: 69d1b1037536b504884c93bb73d662db,
         type: 3}
       propertyPath: m_LocalPosition.x
