@@ -12,6 +12,7 @@ namespace RPG.Combat
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
         [SerializeField] Weapon defaultWeapon = null;
+        [SerializeField] string defaultWeaponName = "Sword";
         Weapon currentWeapon = null;
         float timeSinceLastAttack;
 
@@ -28,7 +29,8 @@ namespace RPG.Combat
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             timeSinceLastAttack = Mathf.Infinity;
-            EquipWeapon(defaultWeapon);
+            Weapon weapon = Resources.Load<Weapon>(defaultWeaponName);
+            EquipWeapon(weapon);
         }
 
         private void Update()
