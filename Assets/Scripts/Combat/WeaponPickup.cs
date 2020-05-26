@@ -27,10 +27,14 @@ namespace RPG.Combat
             ShowPickup(true);
         }
 
-        private void ShowPickup(bool showShow)
+        private void ShowPickup(bool shouldShow)
         {
-            GetComponent<SphereCollider>().enabled = showShow;
-            transform.GetChild(0).GetComponent<MeshRenderer>().enabled = showShow;
+            GetComponent<SphereCollider>().enabled = shouldShow;
+            // transform.GetChild(0).GetComponent<MeshRenderer>().enabled = showShow;
+            foreach (Transform child in transform)
+            {
+                child.GetComponent<MeshRenderer>().enabled = shouldShow;
+            }
         }
     }
 }
