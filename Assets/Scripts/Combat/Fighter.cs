@@ -2,24 +2,25 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
 using RPG.Movement;
+using RPG.Saving;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction
+    public class Fighter : MonoBehaviour, IAction, ISaveable
     {
-        [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 5f;
-        [SerializeField] GameObject weaponPrefab = null;
-        [SerializeField] Transform handTransform = null;
-        [SerializeField] AnimatorOverrideController weaponOverride = null;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+        [SerializeField] Weapon defaultWeapon = null;
+        [SerializeField] string defaultWeaponName = "Sword";
+        Weapon currentWeapon = null;
         float timeSinceLastAttack;
 
         Animator animator;
         Mover mover;
         ActionScheduler actionScheduler;
         NavMeshAgent navMeshAgent;
-        GameObject target;
+        public GameObject target;
 
         private void Awake()
         {
@@ -28,7 +29,8 @@ namespace RPG.Combat
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             timeSinceLastAttack = Mathf.Infinity;
-            SpawnWeapon();
+
+            if (currentWeapon == null) EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -52,11 +54,11 @@ namespace RPG.Combat
             target = gameObject;
         }
 
-        private void SpawnWeapon()
+        public void EquipWeapon(Weapon weapon)
         {
-            Instantiate(weaponPrefab, handTransform);
+            currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
-            animator.runtimeAnimatorController = weaponOverride;
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
         
         private void AttackBehaviour()
@@ -96,11 +98,18 @@ namespace RPG.Combat
             else return true;
         }
 
-        // Animation Event
+        // Animation event
         private void Hit()
         {
             if (target == null) return;
-            DealDamage(weaponDamage, target);
+
+            if (currentWeapon.HasProjectile()) currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>());
+            else DealDamage(currentWeapon.GetWeaponDamage(), target);
+        }
+
+        private void Shoot()
+        {
+            Hit();
         }
 
         private void DealDamage(float damage, GameObject target)
@@ -123,6 +132,7 @@ namespace RPG.Combat
 
         private float WeaponRangeSquared()
         {
+            float weaponRange = currentWeapon.GetWeaponRange();
             return weaponRange * weaponRange;
         }
 
@@ -142,6 +152,18 @@ namespace RPG.Combat
         private void DropTarget()
         {
             target = null;
+        }
+
+        public object CaptureState()
+        {
+            return currentWeapon.name;
+        }
+
+        public void RestoreState(object state)
+        {
+            string weaponName = (string)state;
+            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            EquipWeapon(weapon);
         }
     }
 }

@@ -95,10 +95,37 @@ PrefabInstance:
       propertyPath: weaponDamage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5879540833699294524, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 887a967a559c6d04692fe87190ad22d7,
+        type: 2}
+    - target: {fileID: 5879540833699294524, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: handTransform
+      value: 
+      objectReference: {fileID: 6826783588834085163}
+    - target: {fileID: 5879540833699294524, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: leftHandTransform
+      value: 
+      objectReference: {fileID: 6826783588748286647}
+    - target: {fileID: 5879540833699294524, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: rightHandTransform
+      value: 
+      objectReference: {fileID: 6826783588834085163}
+    - target: {fileID: 5879540833699294524, guid: 211fd03aed7177a44a730dccf1be1f25,
+        type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 887a967a559c6d04692fe87190ad22d7,
+        type: 2}
     - target: {fileID: 6020936341746998677, guid: 211fd03aed7177a44a730dccf1be1f25,
         type: 3}
       propertyPath: healthPoints
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6082266717968812711, guid: 211fd03aed7177a44a730dccf1be1f25,
         type: 3}
@@ -193,3 +220,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f63a136865405419b8bf00755cd0b0, type: 3}
+--- !u!4 &6826783588748286647 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3046943016173130444, guid: 09f63a136865405419b8bf00755cd0b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8427766551164586107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6826783588834085163 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3046943016661647696, guid: 09f63a136865405419b8bf00755cd0b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8427766551164586107}
+  m_PrefabAsset: {fileID: 0}

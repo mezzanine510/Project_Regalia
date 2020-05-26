@@ -21,13 +21,13 @@ namespace RPG.Cinematics
         }
 
         // pb is just a placeholder, since the Delegate event needs to take a PlayableDirector argument
-        public void DisableControl(PlayableDirector pb)
+        public void DisableControl(PlayableDirector pd)
         {
             player.GetComponent<ActionScheduler>().CancelCurrentAction();
             playerController.enabled = false;
         }
 
-        public void EnableControl(PlayableDirector pb)
+        public void EnableControl(PlayableDirector pd)
         {
             playerController.enabled = true;
         }
