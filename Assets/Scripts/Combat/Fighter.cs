@@ -29,8 +29,8 @@ namespace RPG.Combat
             actionScheduler = GetComponent<ActionScheduler>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             timeSinceLastAttack = Mathf.Infinity;
-            Weapon weapon = Resources.Load<Weapon>(defaultWeaponName);
-            EquipWeapon(weapon);
+
+            if (currentWeapon == null) EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -161,7 +161,9 @@ namespace RPG.Combat
 
         public void RestoreState(object state)
         {
-            throw new System.NotImplementedException();
+            string weaponName = (string)state;
+            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            EquipWeapon(weapon);
         }
     }
 }
