@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Saving;
+using RPG.Resources;
 
 namespace RPG.Combat
 {
@@ -103,7 +104,10 @@ namespace RPG.Combat
         {
             if (target == null) return;
 
-            if (currentWeapon.HasProjectile()) currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>());
+            if (currentWeapon.HasProjectile())
+            {
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>());
+            }
             else DealDamage(currentWeapon.GetWeaponDamage(), target);
         }
 
@@ -162,7 +166,7 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             string weaponName = (string)state;
-            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            Weapon weapon = UnityEngine.Resources.Load<Weapon>(weaponName);
             EquipWeapon(weapon);
         }
     }
