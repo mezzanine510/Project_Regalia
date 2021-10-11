@@ -5,7 +5,8 @@ namespace RPG.Stats
 	[CreateAssetMenu(fileName = "Progression", menuName = "Stats/New Progression", order = 0)]
 	public class Progression : ScriptableObject
 	{
-		[SerializeField] ProgressionCharacterClass[] characterClasses = null;
+		[SerializeField] 
+		ProgressionCharacterClass[] characterClasses = null;
 
 		public float GetHealth(CharacterClass characterClass, int level)
 		{
@@ -17,6 +18,7 @@ namespace RPG.Stats
 					return progressionClass.health[level - 1];
 				}
 			}
+			
 			return 0;
 		}
 

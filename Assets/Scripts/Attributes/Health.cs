@@ -3,7 +3,7 @@ using RPG.Core;
 using RPG.Stats;
 using RPG.Saving;
 
-namespace RPG.Resources
+namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
