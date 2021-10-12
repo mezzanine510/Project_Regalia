@@ -13,6 +13,7 @@ namespace RPG.Combat
         [SerializeField] float speed = 10f;
 
         Health target = null;
+        GameObject instigator = null;
         float damage = 0;
 
         private void Awake()
@@ -32,10 +33,11 @@ namespace RPG.Combat
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(Health target, GameObject instigator, float damage)
         {
             this.target = target;
             this.damage = damage;
+            this.instigator = instigator;
         }
 
         private Vector3 GetAimLocation()
@@ -51,7 +53,7 @@ namespace RPG.Combat
 
             if (hitEffect) Instantiate(hitEffect, transform.position, transform.rotation);
             speed = 1.5f;
-            target.TakeDamage(damage, gameObject.transform.position);
+            target.TakeDamage(damage, instigator, gameObject.transform.position);
 
             foreach(GameObject partOfObject in destroyOnHit)
             {

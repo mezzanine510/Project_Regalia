@@ -21,7 +21,7 @@ namespace RPG.Attributes
             healthPoints = GetComponent<BaseStats>().GetHealth();
         }
 
-        public void TakeDamage(float damage, Vector3 direction)
+        public void TakeDamage(float damage, GameObject instigator, Vector3 direction)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
 

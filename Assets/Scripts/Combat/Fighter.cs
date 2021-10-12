@@ -109,10 +109,7 @@ namespace RPG.Combat
         {
             if (target == null) return;
 
-            if (currentWeapon.HasProjectile())
-            {
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>());
-            }
+            if (currentWeapon.HasProjectile())currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target.GetComponent<Health>(), gameObject);
             else DealDamage(currentWeapon.GetWeaponDamage(), target);
         }
 
@@ -124,14 +121,14 @@ namespace RPG.Combat
         private void DealDamage(float damage, GameObject target)
         {
             Vector3 direction = transform.position;
-            target.GetComponent<Health>().TakeDamage(damage, direction);
+            target.GetComponent<Health>().TakeDamage(damage, gameObject, direction);
             print("Health: " + target.GetComponent<Health>().healthPoints);
         }
 
         private bool TargetInAttackRange(GameObject target)
         {
             if (DistanceToTargetSquared(target) < WeaponRangeSquared()) return true;
-            return false;
+            else return false;
         }
 
         private float DistanceToTargetSquared(GameObject target)
