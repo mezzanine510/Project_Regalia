@@ -11,4 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TownSquare 2.unity
     guid: 69ea547c1a0f29d4fa777b0be673b9cb
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 242cd942272fb5a4cb7a514e17bbea41,
+      type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 2739f1d1bf089d843b02f73c0f79493b, type: 2}
