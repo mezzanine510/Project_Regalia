@@ -61,6 +61,11 @@ namespace RPG.Combat
             Animator animator = GetComponent<Animator>();
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
+
+        public GameObject GetTarget()
+        {
+            return target;
+        }
         
         private void AttackBehaviour()
         {
