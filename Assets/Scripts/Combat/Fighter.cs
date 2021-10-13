@@ -99,8 +99,7 @@ namespace RPG.Combat
         {
             Health targetHealthComponent = target.GetComponent<Health>();
 
-            if (    targetHealthComponent == null
-                 || targetHealthComponent.IsDead()) return false;
+            if (targetHealthComponent == null || targetHealthComponent.IsDead()) return false;
             else return true;
         }
 

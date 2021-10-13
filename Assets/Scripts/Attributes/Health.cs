@@ -28,7 +28,17 @@ namespace RPG.Attributes
             if (healthPoints <= 0)
             {
                 Die();
+                AwardExperience(instigator);
             }
+        }
+
+        public void AwardExperience(GameObject instigator)
+        {
+            Experience experience = instigator.GetComponent<Experience>();
+
+            if (experience == null) return;
+            
+            experience.GainExperience(GetComponent<BaseStats>().GetExperienceReward());
         }
 
         public float GetPercentage()
@@ -48,6 +58,7 @@ namespace RPG.Attributes
             return isDead;
         }
 
+        // SAVE SYSTEM
         public object CaptureState()
         {
             return healthPoints;
