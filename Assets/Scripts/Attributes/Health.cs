@@ -25,7 +25,8 @@ namespace RPG.Attributes
         public void TakeDamage(float damage, GameObject instigator, Vector3 direction)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
-
+            // Debug.Log("gameObject: " + gameObject.name);
+            // Debug.Log("instigator: " + instigator.name);
             if (healthPoints <= 0)
             {
                 Die();
