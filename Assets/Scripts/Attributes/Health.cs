@@ -21,6 +21,7 @@ namespace RPG.Attributes
             healthPoints = GetComponent<BaseStats>().GetHealth();
         }
 
+        // 'Vector3 direction' can be used for death animation movement direction
         public void TakeDamage(float damage, GameObject instigator, Vector3 direction)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
