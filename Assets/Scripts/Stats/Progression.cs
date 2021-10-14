@@ -10,6 +10,7 @@ namespace RPG.Stats
 
 		public float GetStat(Stat stat, CharacterClass characterClass, int level)
 		{
+			// Debug.Log("access stat test: " + ProgressionClass progressionClass);
 			foreach (ProgressionClass progressionClass in characterClasses)
 			{
 				if (progressionClass.characterClass != characterClass) continue;
