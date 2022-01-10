@@ -14,12 +14,13 @@ namespace RPG.Attributes
         private void Awake()
         {
             actionScheduler = GetComponent<ActionScheduler>();
-        }
-
-        private void Start()
-        {
             healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
         }
+
+        // private void Start()
+        // {
+        //     healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+        // }
 
         // 'Vector3 direction' can be used for death animation movement direction
         public void TakeDamage(float damage, GameObject instigator, Vector3 direction)
