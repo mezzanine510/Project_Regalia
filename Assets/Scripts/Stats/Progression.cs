@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace RPG.Stats
 {
@@ -8,24 +9,39 @@ namespace RPG.Stats
 		[SerializeField] 
 		ProgressionClass[] characterClasses = null;
 
+		Dictionary<CharacterClass, Dictionary<Stat, float[]>> lookupTable = null;
+
 		public float GetStat(Stat stat, CharacterClass characterClass, int level)
 		{
-			// Debug.Log("access stat test: " + ProgressionClass progressionClass);
+			BuildLookup();
+
+			float[] statLevels = lookupTable[characterClass][stat];
+
+			if (statLevels.Length < level)
+			{
+				return 0;
+			}
+
+			return statLevels[level - 1];
+		}
+
+		private void BuildLookup()
+		{
+			if (lookupTable != null) return;
+
+			lookupTable = new Dictionary<CharacterClass, Dictionary<Stat, float[]>>();
+
 			foreach (ProgressionClass progressionClass in characterClasses)
 			{
-				if (progressionClass.characterClass != characterClass) continue;
+				var statLookupTable = new Dictionary<Stat, float[]>();
 
 				foreach (ProgressionStat progressionStat in progressionClass.stats)
 				{
-					if (progressionStat.stat != stat) continue;
-
-					if (progressionStat.levels.Length < level) continue;
-					
-					return progressionStat.levels[level - 1];
+					statLookupTable[progressionStat.stat] = progressionStat.levels;
 				}
+				
+				lookupTable[progressionClass.characterClass] = statLookupTable;
 			}
-			
-			return 0;
 		}
 
 		[System.Serializable]
