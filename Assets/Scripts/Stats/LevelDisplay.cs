@@ -18,7 +18,7 @@ namespace RPG.Stats
         private void Update()
         {
             levelDisplay.text = String.Format("{0:0}", baseStats.GetLevel());
-            Debug.Log(baseStats.GetLevel());
+            // Debug.Log(baseStats.GetLevel());
         }
     }
 }

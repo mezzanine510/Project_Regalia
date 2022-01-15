@@ -18,9 +18,11 @@ namespace RPG.Stats
 
 			if (statLevels.Length < level)
 			{
+				Debug.Log("statLevels.Length < level");
 				return 0;
 			}
-
+			
+			// Debug.Log("statLevels[level - 1]: " + statLevels[level - 1]);
 			return statLevels[level - 1];
 		}
 

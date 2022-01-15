@@ -14,11 +14,19 @@ namespace RPG.Stats
         [SerializeField]
         Progression progression = null;
 
+        int currentLevel = 0;
+
+        private void Awake()
+        {
+            currentLevel = CalculateLevel();
+        }
+
         private void Update()
         {
-            if (gameObject.tag == "Player")
+            int newLevel = GetLevel();
+            if (newLevel > currentLevel)
             {
-                print(GetLevel());
+                currentLevel = newLevel;
             }
         }
 
@@ -29,9 +37,16 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
+            return currentLevel;
+        }
+
+        public int CalculateLevel()
+        {
             Experience experience = GetComponent<Experience>();
 
             if (experience == null) return startingLevel;
+
+            Debug.Log("experience component: ", experience);
 
             float currentXP = experience.GetPoints();
             int penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
