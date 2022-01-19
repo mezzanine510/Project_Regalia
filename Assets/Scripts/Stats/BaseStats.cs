@@ -28,7 +28,7 @@ namespace RPG.Stats
 
         private void UpdateLevel()
         {
-            int newLevel = GetLevel();
+            int newLevel = CalculateLevel();
             if (newLevel > currentLevel)
             {
                 currentLevel = newLevel;
@@ -60,7 +60,7 @@ namespace RPG.Stats
                 return startingLevel;
             }
 
-            Debug.Log("experience component: ", experience);
+            Debug.Log("current experience: " + experience.GetPoints()); // DEBUG
 
             float currentXP = experience.GetPoints();
             int penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
