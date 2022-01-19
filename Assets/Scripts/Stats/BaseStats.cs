@@ -4,15 +4,15 @@ namespace RPG.Stats
 {
     public class BaseStats : MonoBehaviour
     {
-        [Range(1, 99)]
-        [SerializeField]
-        int startingLevel = 1;
-
         [SerializeField]
         CharacterClass characterClass;
 
         [SerializeField]
         Progression progression = null;
+
+        [Range(1, 99)]
+        [SerializeField]
+        int startingLevel = 1;
 
         int currentLevel = 0;
 
@@ -42,10 +42,11 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
-            if (currentLevel < 1)
+            if (currentLevel < 1) // prevents currentLevel from being 0, the default value
             {
                 currentLevel = CalculateLevel();
             }
+
             return currentLevel;
         }
 
@@ -53,7 +54,11 @@ namespace RPG.Stats
         {
             Experience experience = GetComponent<Experience>();
 
-            if (experience == null) return startingLevel;
+            if (experience == null) 
+            {
+                Debug.Log("Experience is null!!");
+                return startingLevel;
+            }
 
             Debug.Log("experience component: ", experience);
 
