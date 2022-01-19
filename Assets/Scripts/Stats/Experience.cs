@@ -8,9 +8,14 @@ namespace RPG.Stats
     {
         [SerializeField] float experiencePoints = 0f;
 
+        // instead of delcaring a delegate type which returns void, you can use an Action
+        // public delegate void ExperienceGainedDelegate();
+        public event Action onExperienceGained;
+
         public void GainExperience(float experience)
         {
             experiencePoints += experience;
+            onExperienceGained();
         }
 
         public float GetPoints()
