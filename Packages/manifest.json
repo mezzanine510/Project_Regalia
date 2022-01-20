@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.unity.adaptiveperformance": "3.0.0",
     "com.unity.cinemachine": "2.8.2",
     "com.unity.collab-proxy": "1.15.4",
     "com.unity.ext.nunit": "1.0.6",

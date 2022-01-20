@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RPG.Stats
 {
@@ -10,13 +11,15 @@ namespace RPG.Stats
         [SerializeField]
         Progression progression = null;
 
+        [SerializeField] GameObject levelUpEffect = null;
+        
         [Range(1, 99)]
         [SerializeField]
         int startingLevel = 1;
 
         int currentLevel = 0;
 
-        private void Awake()
+        private void Start()
         {
             currentLevel = CalculateLevel();
             Experience experience = GetComponent<Experience>();
@@ -32,7 +35,38 @@ namespace RPG.Stats
             if (newLevel > currentLevel)
             {
                 currentLevel = newLevel;
+                LevelUpEffect();
             }
+        }
+
+        public int CalculateLevel()
+        {
+            Experience experience = GetComponent<Experience>();
+
+            if (experience == null)
+            {
+                return startingLevel;
+            }
+
+            float currentXP = experience.GetPoints();
+            int penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
+
+            for (int level = 1; level <= penultimateLevel; level++)
+            {
+                float XPToLevelUp = progression.GetStat(Stat.ExperienceToLevelUp, characterClass, level);
+
+                if (XPToLevelUp > currentXP)
+                {
+                    return level;
+                }
+            }
+
+            return penultimateLevel + 1;
+        }
+
+        private void LevelUpEffect()
+        {
+            Instantiate(levelUpEffect, transform);
         }
 
         public float GetStat(Stat stat)
@@ -50,32 +84,5 @@ namespace RPG.Stats
             return currentLevel;
         }
 
-        public int CalculateLevel()
-        {
-            Experience experience = GetComponent<Experience>();
-
-            if (experience == null) 
-            {
-                Debug.Log("Experience is null!!");
-                return startingLevel;
-            }
-
-            Debug.Log("current experience: " + experience.GetPoints()); // DEBUG
-
-            float currentXP = experience.GetPoints();
-            int penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
-
-            for (int level = 1; level <= penultimateLevel; level++)
-            {
-                float XPToLevelUp = progression.GetStat(Stat.ExperienceToLevelUp, characterClass, level);
-
-                if (XPToLevelUp > currentXP)
-                {
-                    return level;
-                }
-            }
-
-            return penultimateLevel + 1;
-        }
     }
 }

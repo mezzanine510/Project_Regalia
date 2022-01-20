@@ -17,7 +17,6 @@ namespace RPG.Stats
 
         private void Update()
         {
-            Debug.Log("experience: " + experience.GetPoints());
             experienceDisplay.text = experience.GetPoints().ToString();
         }
     }
