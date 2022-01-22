@@ -54,7 +54,7 @@ namespace RPG.Attributes
             // Debug.Log("baseHealth: " + baseHealth);
             // Debug.Log("percentageOfHealth: " + percentageOfHealth);
             if (healthPoints > percentageOfHealth) return;
-            healthPoints = percentageOfHealth;
+            healthPoints = Mathf.Max(healthPoints, percentageOfHealth);
         }
 
         private void Die()
