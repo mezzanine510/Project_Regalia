@@ -17,7 +17,9 @@ namespace RPG.Stats
         [SerializeField]
         int startingLevel = 1;
 
-        int currentLevel = 0;
+        private int currentLevel = 0;
+
+        public Action onLevelUp;
 
         private void Start()
         {
@@ -36,6 +38,7 @@ namespace RPG.Stats
             {
                 currentLevel = newLevel;
                 LevelUpEffect();
+                onLevelUp();
             }
         }
 
