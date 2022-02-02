@@ -25,6 +25,7 @@ namespace RPG.Stats
         {
             currentLevel = CalculateLevel();
             Experience experience = GetComponent<Experience>();
+            
             if (experience != null)
             {
                 experience.onExperienceGained += UpdateLevel;
@@ -86,6 +87,5 @@ namespace RPG.Stats
 
             return currentLevel;
         }
-
     }
 }

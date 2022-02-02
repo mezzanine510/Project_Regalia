@@ -25,12 +25,23 @@ namespace RPG.Attributes
         // 'Vector3 direction' can be used for death animation movement direction
         public void TakeDamage(float damage, GameObject instigator, Vector3 direction)
         {
+            print(gameObject.name + "took damage: " + damage);
             healthPoints = Mathf.Max(healthPoints - damage, 0);
             if (healthPoints <= 0)
             {
                 Die();
                 AwardExperience(instigator);
             }
+        }
+
+        public float GetHealthPoints()
+        {
+            return healthPoints;
+        }
+
+        public float GetMaxHealthPoints()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         public void AwardExperience(GameObject instigator)
